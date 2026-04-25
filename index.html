@@ -1,242 +1,397 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>VibeRoom</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>VibeRoom | Premium Real-time Chat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<style>
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #0f172a, #020617);
-  color: #e2e8f0;
-}
+    <style>
+        :root {
+            --primary: #38bdf8;
+            --primary-dark: #0ea5e9;
+            --bg-dark: #020617;
+            --panel-bg: rgba(30, 41, 59, 0.7);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent: linear-gradient(135deg, #38bdf8, #818cf8);
+        }
 
-/* HEADER */
-header {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px 40px;
-  background: rgba(30, 41, 59, 0.7);
-  backdrop-filter: blur(10px);
-}
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
 
-.logo {
-  font-size: 22px;
-  font-weight: bold;
-}
+        body {
+            background: radial-gradient(circle at top right, #1e1b4b, #020617);
+            color: var(--text-main);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
 
-.btn {
-  background: #38bdf8;
-  padding: 8px 18px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.3s;
-}
+        /* --- HEADER --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 100;
+        }
 
-.btn:hover {
-  background: #0ea5e9;
-}
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: var(--accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-/* HERO */
-.hero {
-  text-align: center;
-  padding: 50px 20px;
-}
+        .nav-btns { display: flex; gap: 15px; align-items: center; }
 
-.hero h1 {
-  font-size: 42px;
-  margin-bottom: 10px;
-}
+        .btn-login {
+            background: var(--accent);
+            color: #000;
+            padding: 8px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+        }
 
-.hero p {
-  color: #94a3b8;
-}
+        .btn-login:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4); }
 
-/* CHAT */
-.chat-container {
-  display: flex;
-  margin: 40px auto;
-  width: 90%;
-  height: 500px;
-  border-radius: 12px;
-  overflow: hidden;
-  background: rgba(30, 41, 59, 0.6);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 0 40px rgba(0,0,0,0.5);
-}
+        /* --- HERO SECTION --- */
+        .hero {
+            text-align: center;
+            padding: 40px 20px 20px;
+        }
 
-.sidebar {
-  width: 25%;
-  background: rgba(15, 23, 42, 0.8);
-  padding: 15px;
-}
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(to bottom, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-.user {
-  padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 8px;
-  cursor: pointer;
-  transition: 0.3s;
-}
+        .hero p { color: var(--text-muted); font-size: 1rem; }
 
-.user:hover {
-  background: #334155;
-}
+        /* --- CHAT INTERFACE --- */
+        .main-app {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            max-height: calc(100vh - 180px);
+        }
 
-.user.active {
-  background: #38bdf8;
-  color: black;
-}
+        .chat-window {
+            width: 100%;
+            max-width: 1100px;
+            height: 100%;
+            background: var(--panel-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            display: flex;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
 
-/* CHAT AREA */
-.chat {
-  width: 75%;
-  display: flex;
-  flex-direction: column;
-}
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: 300px;
+            background: rgba(15, 23, 42, 0.5);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+        }
 
-.messages {
-  flex: 1;
-  padding: 15px;
-  overflow-y: auto;
-}
+        .sidebar-header { padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); font-weight: 600; font-size: 0.9rem; color: var(--text-muted); }
 
-/* MESSAGE */
-.msg {
-  margin: 10px 0;
-  padding: 10px 14px;
-  border-radius: 12px;
-  max-width: 60%;
-  font-size: 14px;
-  animation: fadeIn 0.3s ease;
-}
+        .user-list { flex: 1; overflow-y: auto; padding: 10px; }
 
-.msg.you {
-  background: #38bdf8;
-  color: black;
-  margin-left: auto;
-}
+        .user-card {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            transition: 0.2s;
+            position: relative;
+        }
 
-.msg.other {
-  background: #1e293b;
-}
+        .user-card:hover { background: rgba(255, 255, 255, 0.05); }
 
-@keyframes fadeIn {
-  from {opacity: 0; transform: translateY(10px);}
-  to {opacity: 1; transform: translateY(0);}
-}
+        .user-card.active {
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
 
-/* INPUT */
-.input {
-  display: flex;
-  padding: 10px;
-  background: #020617;
-}
+        .avatar {
+            width: 45px; height: 45px;
+            background: #334155;
+            border-radius: 50%;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary);
+            border: 2px solid transparent;
+        }
 
-.input input {
-  flex: 1;
-  padding: 10px;
-  border-radius: 6px;
-  border: none;
-  background: #1e293b;
-  color: white;
-}
+        .active .avatar { border-color: var(--primary); }
 
-.input button {
-  margin-left: 10px;
-  background: #38bdf8;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 6px;
-  cursor: pointer;
-}
+        .user-info .name { display: block; font-weight: 600; font-size: 0.95rem; }
+        .user-info .status { font-size: 0.75rem; color: #22c55e; }
 
-.input button:hover {
-  background: #0ea5e9;
-}
-</style>
+        /* --- CHAT AREA --- */
+        .chat-content { flex: 1; display: flex; flex-direction: column; background: rgba(15, 23, 42, 0.2); }
+
+        .chat-header {
+            padding: 15px 25px;
+            background: rgba(15, 23, 42, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .messages-display {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* CUSTOM SCROLLBAR */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+
+        .msg-row { display: flex; width: 100%; }
+        .msg-row.me { justify-content: flex-end; }
+
+        .bubble {
+            padding: 12px 18px;
+            border-radius: 18px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            max-width: 70%;
+            position: relative;
+        }
+
+        .bubble.me {
+            background: var(--accent);
+            color: #000;
+            border-bottom-right-radius: 4px;
+            font-weight: 500;
+        }
+
+        .bubble.them {
+            background: #1e293b;
+            color: var(--text-main);
+            border-bottom-left-radius: 4px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* --- INPUT AREA --- */
+        .input-area {
+            padding: 20px 25px;
+            background: rgba(15, 23, 42, 0.4);
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .input-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .input-area input {
+            width: 100%;
+            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 14px 20px;
+            border-radius: 12px;
+            color: white;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-area input:focus { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.1); }
+
+        .btn-send {
+            background: var(--primary);
+            border: none;
+            width: 48px; height: 48px;
+            border-radius: 12px;
+            cursor: pointer;
+            color: #000;
+            transition: 0.3s;
+        }
+
+        .btn-send:hover { transform: scale(1.05); background: var(--primary-dark); }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .sidebar { width: 80px; }
+            .sidebar-header, .user-info { display: none; }
+            .avatar { margin-right: 0; }
+            .hero h1 { font-size: 1.8rem; }
+            .chat-window { border-radius: 0; }
+        }
+    </style>
 </head>
-
 <body>
 
 <header>
-  <div class="logo">VibeRoom</div>
-  <div class="btn">Login</div>
+    <div class="logo"><i class="fa-solid fa-bolt-lightning"></i> VibeRoom</div>
+    <div class="nav-btns">
+        <button class="btn-login">Launch App</button>
+    </div>
 </header>
 
 <section class="hero">
-  <h1>Connect. Chat. Vibe.</h1>
-  <p>Real-time conversations with modern UI</p>
+    <h1>Connect. Chat. <span style="color: var(--primary);">Vibe.</span></h1>
+    <p>The next-generation chat experience for modern teams.</p>
 </section>
 
-<div class="chat-container">
+<div class="main-app">
+    <div class="chat-window">
+        <div class="sidebar">
+            <div class="sidebar-header">DIRECT MESSAGES</div>
+            <div class="user-list">
+                <div class="user-card active" onclick="selectUser('Rahul', this, 'R')">
+                    <div class="avatar">R</div>
+                    <div class="user-info">
+                        <span class="name">Rahul Sharma</span>
+                        <span class="status">Online</span>
+                    </div>
+                </div>
+                <div class="user-card" onclick="selectUser('Priya', this, 'P')">
+                    <div class="avatar">P</div>
+                    <div class="user-info">
+                        <span class="name">Priya Patel</span>
+                        <span class="status" style="color: var(--text-muted)">Away</span>
+                    </div>
+                </div>
+                <div class="user-card" onclick="selectUser('Aman', this, 'A')">
+                    <div class="avatar">A</div>
+                    <div class="user-info">
+                        <span class="name">Aman Gupta</span>
+                        <span class="status">Online</span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-  <div class="sidebar">
-    <div class="user" onclick="selectUser('Rahul', this)">Rahul</div>
-    <div class="user" onclick="selectUser('Priya', this)">Priya</div>
-    <div class="user" onclick="selectUser('Aman', this)">Aman</div>
-  </div>
+        <div class="chat-content">
+            <div class="chat-header">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <strong id="active-user-name">Rahul Sharma</strong>
+                </div>
+                <div style="color: var(--text-muted); cursor: pointer;">
+                    <i class="fa-solid fa-video" style="margin-right: 15px;"></i>
+                    <i class="fa-solid fa-circle-info"></i>
+                </div>
+            </div>
 
-  <div class="chat">
-    <div class="messages" id="messages"></div>
+            <div class="messages-display" id="chat-box">
+                <div class="msg-row">
+                    <div class="bubble them">Welcome to the room! Start vibing.</div>
+                </div>
+            </div>
 
-    <div class="input">
-      <input id="input" placeholder="Type a message"/>
-      <button onclick="send()">Send</button>
+            <div class="input-area">
+                <div class="input-wrapper">
+                    <input type="text" id="msg-input" placeholder="Message Rahul..." autocomplete="off">
+                </div>
+                <button class="btn-send" onclick="handleSend()">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
-
 </div>
 
 <script>
-let currentUser = null;
+    let currentSelected = "Rahul";
+    const chatBox = document.getElementById('chat-box');
+    const msgInput = document.getElementById('msg-input');
+    const activeHeader = document.getElementById('active-user-name');
 
-const messagesBox = document.getElementById("messages");
-const input = document.getElementById("input");
+    function selectUser(name, element, initial) {
+        currentSelected = name;
+        activeHeader.innerText = name + (name === "Rahul" ? " Sharma" : name === "Priya" ? " Patel" : " Gupta");
+        msgInput.placeholder = `Message ${name}...`;
 
-// Select user
-function selectUser(name, el) {
-  currentUser = name;
+        // UI active class toggle
+        document.querySelectorAll('.user-card').forEach(card => card.classList.remove('active'));
+        element.classList.add('active');
 
-  document.querySelectorAll(".user").forEach(u => u.classList.remove("active"));
-  el.classList.add("active");
+        // Clear and show history dummy
+        chatBox.innerHTML = `<div class="msg-row"><div class="bubble them">You are now chatting with ${name}</div></div>`;
+    }
 
-  messagesBox.innerHTML = `
-    <div class="msg other">Chatting with ${name}</div>
-  `;
-}
+    function handleSend() {
+        const text = msgInput.value.trim();
+        if(!text) return;
 
-// Send message
-function send() {
-  const msg = input.value.trim();
+        // User Message
+        const myMsg = `
+            <div class="msg-row me">
+                <div class="bubble me">${text}</div>
+            </div>
+        `;
+        chatBox.innerHTML += myMsg;
+        msgInput.value = "";
+        scrollDown();
 
-  if (!msg || !currentUser) return;
+        // Artificial "Typing" & Response
+        setTimeout(() => {
+            const typing = document.createElement('div');
+            typing.id = "typing-indicator";
+            typing.className = "msg-row";
+            typing.innerHTML = `<div class="bubble them" style="font-style: italic; opacity: 0.7;">${currentSelected} is typing...</div>`;
+            chatBox.appendChild(typing);
+            scrollDown();
 
-  messagesBox.innerHTML += `<div class="msg you">${msg}</div>`;
-  scrollToBottom();
+            setTimeout(() => {
+                document.getElementById('typing-indicator').remove();
+                const reply = `
+                    <div class="msg-row">
+                        <div class="bubble them">That sounds like a great idea, let's do it! 🚀</div>
+                    </div>
+                `;
+                chatBox.innerHTML += reply;
+                scrollDown();
+            }, 1500);
+        }, 500);
+    }
 
-  setTimeout(() => {
-    messagesBox.innerHTML += `<div class="msg other">${currentUser}: Nice!</div>`;
-    scrollToBottom();
-  }, 800);
+    function scrollDown() {
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
 
-  input.value = "";
-}
-
-// Auto scroll
-function scrollToBottom() {
-  messagesBox.scrollTop = messagesBox.scrollHeight;
-}
-
-// Enter key support
-input.addEventListener("keypress", function (e) {
-  if (e.key === "Enter") send();
-});
-
-// Empty state
-messagesBox.innerHTML = `<p style="color:#64748b;">Select a user to start chatting</p>`;
+    msgInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") handleSend();
+    });
 </script>
 
 </body>

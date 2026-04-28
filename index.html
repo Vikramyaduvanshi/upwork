@@ -1,228 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RepairPro Vanuatu | Business Solutions</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        [x-cloak] { display: none !important; }
-        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Vanuatu Mobile Repair Platform</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#0f172a;color:#e2e8f0}header{padding:18px 24px;display:flex;justify-content:space-between;align-items:center;background:#111827;position:sticky;top:0}.logo{font-size:22px;font-weight:700}.btn{background:#22c55e;color:#04110a;padding:10px 16px;border:none;border-radius:10px;font-weight:700;cursor:pointer}.hero{padding:60px 24px;text-align:center;background:linear-gradient(135deg,#1e293b,#0f172a)}.hero h1{font-size:42px;margin:0 0 12px}.hero p{max-width:760px;margin:auto;color:#cbd5e1}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;padding:24px}.card{background:#111827;border:1px solid #1f2937;border-radius:18px;padding:20px;box-shadow:0 10px 25px rgba(0,0,0,.25)}h2{margin:0 0 14px}.section{padding:12px 24px 30px}.input,select{width:100%;padding:10px;border-radius:10px;border:1px solid #334155;background:#0b1220;color:#fff;margin:8px 0}.status{padding:8px 12px;border-radius:999px;display:inline-block;background:#1d4ed8}.table{width:100%;border-collapse:collapse}.table td,.table th{padding:10px;border-bottom:1px solid #334155;text-align:left}.footer{padding:30px;text-align:center;color:#94a3b8}.kpi{font-size:28px;font-weight:700}.badge{background:#f59e0b;color:#111827;padding:4px 8px;border-radius:999px;font-size:12px}.nav{display:flex;gap:10px;flex-wrap:wrap}.small{font-size:14px;color:#94a3b8}
+</style>
 </head>
-<body class="bg-slate-50 text-slate-900" x-data="{ 
-    view: 'customer', 
-    tab: 'home',
-    searchModel: '',
-    trackingId: '',
-    prices: [
-        { brand: 'iPhone', model: '14 Pro', repair: 'Screen', price: '35,000 VT' },
-        { brand: 'iPhone', model: '14 Pro', repair: 'Battery', price: '12,000 VT' },
-        { brand: 'Samsung', model: 'S23 Ultra', repair: 'Screen', price: '42,000 VT' },
-        { brand: 'Google', model: 'Pixel 7', repair: 'Charging Port', price: '8,500 VT' }
-    ],
-    branches: [
-        { name: 'Port Vila Central', location: 'Kumul Highway', status: 'Open' },
-        { name: 'Luganville Shop', location: 'Main St, Santo', status: 'Open' },
-        { name: 'Tanna Branch', location: 'Lenakel Town', status: 'Limited Hours' },
-        { name: 'Efate North', location: 'Port Havannah', status: 'Open' },
-        { name: 'Malekula Repair', location: 'Lakatoro', status: 'Open' }
-    ]
-}">
+<body>
+<header><div class='logo'>RepairPro Vanuatu</div><div class='nav'><button class='btn' onclick="showPortal('landing')">Home</button><button class='btn' onclick="showPortal('user')">Customer Login</button><button class='btn' onclick="showPortal('admin')">Admin Login</button></div></header>
 
-    <nav class="bg-blue-700 text-white shadow-xl sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <i class="fas fa-tools text-2xl"></i>
-                <span class="font-bold text-xl tracking-tight">RepairPro <span class="font-light">Vanuatu</span></span>
-            </div>
-            <div class="flex space-x-2 bg-blue-800 rounded-lg p-1">
-                <button @click="view = 'customer'" :class="view === 'customer' ? 'bg-white text-blue-700' : ''" class="px-3 py-1 rounded-md text-xs font-bold transition">CUSTOMER</button>
-                <button @click="view = 'admin'" :class="view === 'admin' ? 'bg-white text-blue-700' : ''" class="px-3 py-1 rounded-md text-xs font-bold transition">ADMIN</button>
-            </div>
-        </div>
-    </nav>
+<section id='landing'>
+<section class='hero'><h1>Professional Mobile Repair Business Platform</h1><p>Separate secure portals for Customers and Admin Staff. Multi-branch ready with premium UX.</p></section>
+<section class='grid'><div class='card'><h2>Customer Side</h2><p>Track repairs, member card, pricing, choose branch, warranty support.</p></div><div class='card'><h2>Admin Side</h2><p>Manage customers, jobs, branches, reports, pricing, staff access.</p></div></section>
+</section>
 
-    <main x-show="view === 'customer'" class="max-w-4xl mx-auto p-4 pb-20" x-cloak>
-        
-        <div class="flex space-x-4 mb-6 overflow-x-auto pb-2">
-            <button @click="tab = 'home'" :class="tab === 'home' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-500'" class="pb-2 font-semibold whitespace-nowrap">Dashboard</button>
-            <button @click="tab = 'track'" :class="tab === 'track' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-500'" class="pb-2 font-semibold whitespace-nowrap">Track Repair</button>
-            <button @click="tab = 'pricing'" :class="tab === 'pricing' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-500'" class="pb-2 font-semibold whitespace-nowrap">Price Checker</button>
-            <button @click="tab = 'branches'" :class="tab === 'branches' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-500'" class="pb-2 font-semibold whitespace-nowrap">Locations</button>
-        </div>
+<section id='userPortal' style='display:none'>
+<section class='hero'><h1>Customer Portal</h1><p>Login with phone number to manage your repairs and membership.</p></section>
+<section class='grid'>
+<div class='card'><h2>Login</h2><input class='input' placeholder='Phone Number'><button class='btn'>Send OTP</button></div>
+<div class='card'><h2>Digital Member Card</h2><p>Member ID: MBR2048<br>Gold Level • 15% Discount</p></div>
+<div class='card'><h2>Track Repair</h2><input class='input' placeholder='Job Number'><button class='btn'>Track</button><p><span class='status'>Ready for Pickup</span></p></div>
+<div class='card'><h2>Repair Price Checker</h2><p>iPhone 13 Screen: $89<br>Battery: $49</p></div>
+<div class='card'><h2>Choose Branch</h2><p>Nearest: Port Vila Branch</p></div>
+<div class='card'><h2>Repair History</h2><p>3 Repairs Completed</p></div>
+</section></section>
 
-        <section x-show="tab === 'home'" class="space-y-6">
-            <div class="bg-gradient-to-br from-blue-600 to-indigo-800 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden">
-                <div class="relative z-10">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="text-blue-100 text-sm uppercase">Digital Member Card</p>
-                            <h3 class="text-2xl font-bold">Adrien Kalmet</h3>
-                        </div>
-                        <i class="fas fa-qrcode text-4xl"></i>
-                    </div>
-                    <div class="mt-8 flex justify-between items-end">
-                        <div>
-                            <p class="text-xs opacity-75">Loyalty Level</p>
-                            <p class="font-bold text-lg text-yellow-400">★ Platinum Tier (20% Off)</p>
-                        </div>
-                        <p class="font-mono text-sm">ID: VNU-77210</p>
-                    </div>
-                </div>
-                <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-white opacity-10 rounded-full"></div>
-            </div>
+<section id='adminPortal' style='display:none'>
+<section class='hero'><h1>Admin Portal</h1><p>Secure business dashboard for company staff only.</p></section>
+<section class='grid'>
+<div class='card'><h2>Admin Login</h2><input class='input' placeholder='Email'><input class='input' placeholder='Password'><button class='btn'>Login</button></div>
+<div class='card'><h2>Customer Management</h2><p>12,480 Registered Customers</p></div>
+<div class='card'><h2>Repair Jobs</h2><p>182 Active Jobs</p></div>
+<div class='card'><h2>Pricing Manager</h2><p>Update all model prices instantly</p></div>
+<div class='card'><h2>Branch Management</h2><p>5 Active Stores</p></div>
+<div class='card'><h2>Reports</h2><p>Monthly Revenue: $48,900</p></div>
+<div class='card'><h2>Staff Access Roles</h2><p>Super Admin / Manager / Technician</p></div>
+<div class='card'><h2>Inventory</h2><p>Spare parts stock tracking</p></div>
+</section></section>
 
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
-                <h4 class="font-bold mb-4">Recent Repair History</h4>
-                <div class="space-y-3">
-                    <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                        <div>
-                            <p class="font-bold text-sm text-gray-800">Samsung S22 Ultra</p>
-                            <p class="text-xs text-gray-500">Oct 12, 2025 • Port Vila Central</p>
-                        </div>
-                        <span class="text-green-600 font-bold text-xs">Completed</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section x-show="tab === 'track'" class="space-y-4">
-            <div class="bg-white p-6 rounded-xl shadow-sm border">
-                <h3 class="text-lg font-bold mb-4">Enter Tracking Details</h3>
-                <div class="flex space-x-2">
-                    <input type="text" x-model="trackingId" placeholder="Job # (e.g. 5055)" class="flex-1 border p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                    <button class="bg-blue-600 text-white px-6 rounded-lg font-bold">Search</button>
-                </div>
-            </div>
-
-            <div class="bg-white p-6 rounded-xl shadow-sm border" x-show="trackingId === '5055'">
-                <div class="flex justify-between mb-6">
-                    <div>
-                        <h4 class="font-bold text-lg">Job #5055</h4>
-                        <p class="text-sm text-gray-500">iPhone 13 - Screen Replacement</p>
-                    </div>
-                    <div class="text-right font-bold text-blue-600">IN PROGRESS</div>
-                </div>
-                <div class="relative flex justify-between items-center">
-                    <div class="absolute w-full h-1 bg-gray-200 top-1/2 -translate-y-1/2"></div>
-                    <div class="absolute w-2/3 h-1 bg-blue-500 top-1/2 -translate-y-1/2 transition-all"></div>
-                    <div class="z-10 bg-blue-600 text-white rounded-full p-2 text-xs"><i class="fas fa-check"></i></div>
-                    <div class="z-10 bg-blue-600 text-white rounded-full p-2 text-xs"><i class="fas fa-tools"></i></div>
-                    <div class="z-10 bg-white border-4 border-blue-500 rounded-full p-2 text-xs"><i class="fas fa-box-open"></i></div>
-                    <div class="z-10 bg-gray-200 text-gray-400 rounded-full p-2 text-xs"><i class="fas fa-flag-checkered"></i></div>
-                </div>
-                <div class="flex justify-between mt-2 text-[10px] font-bold text-gray-500 uppercase">
-                    <span>Received</span><span>Repairing</span><span>Testing</span><span>Ready</span>
-                </div>
-            </div>
-        </section>
-
-        <section x-show="tab === 'pricing'" class="space-y-4">
-            <div class="bg-white p-4 rounded-xl border flex items-center space-x-2">
-                <i class="fas fa-search text-gray-400"></i>
-                <input type="text" x-model="searchModel" placeholder="Search Model (e.g. iPhone)..." class="w-full outline-none">
-            </div>
-            <div class="grid gap-3">
-                <template x-for="item in prices.filter(p => p.model.toLowerCase().includes(searchModel.toLowerCase()))" :key="item.model">
-                    <div class="bg-white p-4 rounded-xl border flex justify-between items-center hover:border-blue-300 transition">
-                        <div>
-                            <p class="text-xs font-bold text-blue-600" x-text="item.brand"></p>
-                            <p class="font-bold text-gray-800" x-text="item.model"></p>
-                            <p class="text-sm text-gray-500" x-text="item.repair"></p>
-                        </div>
-                        <div class="text-right">
-                            <p class="text-lg font-black text-gray-900" x-text="item.price"></p>
-                            <p class="text-[10px] text-gray-400">Parts & Labor Included</p>
-                        </div>
-                    </div>
-                </template>
-            </div>
-        </section>
-
-        <section x-show="tab === 'branches'" class="space-y-4">
-            <h3 class="font-bold text-lg">Our Network</h3>
-            <div class="grid gap-4">
-                <template x-for="branch in branches" :key="branch.name">
-                    <div class="bg-white p-4 rounded-xl border flex justify-between">
-                        <div>
-                            <h5 class="font-bold" x-text="branch.name"></h5>
-                            <p class="text-sm text-gray-500" x-text="branch.location"></p>
-                            <span class="inline-block mt-2 px-2 py-1 bg-green-100 text-green-700 text-[10px] font-bold rounded" x-text="branch.status"></span>
-                        </div>
-                        <button class="self-center bg-gray-100 p-2 rounded-lg"><i class="fas fa-directions text-blue-600"></i></button>
-                    </div>
-                </template>
-            </div>
-        </section>
-    </main>
-
-    <main x-show="view === 'admin'" class="max-w-6xl mx-auto p-4" x-cloak>
-        <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-black uppercase italic">Manager Dashboard</h2>
-            <div class="text-sm font-bold bg-yellow-100 text-yellow-700 px-3 py-1 rounded">Vila Central Store</div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-white p-6 rounded-xl border border-gray-200">
-                <p class="text-gray-500 text-sm">Active Repairs</p>
-                <p class="text-3xl font-bold">24</p>
-            </div>
-            <div class="bg-white p-6 rounded-xl border border-gray-200">
-                <p class="text-gray-500 text-sm">Today's Revenue</p>
-                <p class="text-3xl font-bold">145,200 VT</p>
-            </div>
-            <div class="bg-white p-6 rounded-xl border border-gray-200">
-                <p class="text-gray-500 text-sm">Wait Time</p>
-                <p class="text-3xl font-bold text-orange-500">~2.5 Hrs</p>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-xl border shadow-sm overflow-hidden">
-            <div class="p-4 border-b bg-gray-50 flex justify-between items-center">
-                <h4 class="font-bold">Live Job Queue</h4>
-                <button class="bg-blue-600 text-white px-4 py-1 rounded-md text-sm">+ New Ticket</button>
-            </div>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left text-sm">
-                    <thead>
-                        <tr class="bg-gray-100">
-                            <th class="p-3">Job ID</th>
-                            <th class="p-3">Customer</th>
-                            <th class="p-3">Device</th>
-                            <th class="p-3">Status</th>
-                            <th class="p-3">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="border-b">
-                            <td class="p-3 font-mono">#5055</td>
-                            <td class="p-3 font-bold">Sam Luken</td>
-                            <td class="p-3">iPhone 13</td>
-                            <td class="p-3"><span class="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs">Repairing</span></td>
-                            <td class="p-3"><button class="text-blue-600 font-bold hover:underline">Manage</button></td>
-                        </tr>
-                        <tr class="border-b">
-                            <td class="p-3 font-mono">#5056</td>
-                            <td class="p-3 font-bold">Tania V.</td>
-                            <td class="p-3">Samsung S21</td>
-                            <td class="p-3"><span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full text-xs">Waiting Parts</span></td>
-                            <td class="p-3"><button class="text-blue-600 font-bold hover:underline">Manage</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </main>
-
-    <div x-show="view === 'customer'" class="fixed bottom-0 left-0 right-0 glass border-t flex justify-around p-3 md:hidden">
-        <button @click="tab = 'home'" :class="tab === 'home' ? 'text-blue-600' : 'text-gray-400'"><i class="fas fa-home"></i></button>
-        <button @click="tab = 'track'" :class="tab === 'track' ? 'text-blue-600' : 'text-gray-400'"><i class="fas fa-box"></i></button>
-        <button @click="tab = 'pricing'" :class="tab === 'pricing' ? 'text-blue-600' : 'text-gray-400'"><i class="fas fa-tag"></i></button>
-        <button @click="tab = 'branches'" :class="tab === 'branches' ? 'text-blue-600' : 'text-gray-400'"><i class="fas fa-map-marker-alt"></i></button>
-    </div>
-
+<div class='footer'>Separate Professional Customer + Admin System</div>
+<script>
+function showPortal(type){document.getElementById('landing').style.display='none';document.getElementById('userPortal').style.display='none';document.getElementById('adminPortal').style.display='none';if(type==='landing'){landing.style.display='block'}if(type==='user'){userPortal.style.display='block'}if(type==='admin'){adminPortal.style.display='block'}}
+</script>
 </body>
 </html>
